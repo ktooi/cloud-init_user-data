@@ -1,0 +1,14 @@
+#cloud-config
+write_files:
+  - content: |
+      #ps1_sysnative
+      $networkListManager = [Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]"{DCB00C01-570F-4A9B-8D69-199FDBA5723B}"))
+      $connections = $networkListManager.GetNetworkConnections()
+      $connections | % {
+          $_.GetNetwork().SetCategory(1)
+      }
+      Enable-PSRemoting -Force
+      Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP" -RemoteAddress Any
+    path: C:\windows\temp\configure.ps1
+runcmd:
+  - ['powershell.exe', '-executionpolicy', 'unrestricted', '-file', 'C:\windows\temp\configure.ps1']

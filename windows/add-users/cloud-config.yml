@@ -1,0 +1,10 @@
+#cloud-config
+# See also: https://cloudbase-init.readthedocs.io/en/latest/userdata.html#cloud-config
+users:
+  - default
+  - name: John
+    gecos: John Doe
+    groups:
+      - Administrators
+      - Remote Desktop Users
+    passwd: "PLAIN Pa$$w0rd"
